@@ -8,9 +8,28 @@ namespace PromotionEngine.UnitTest
     [TestClass]
     public class CartTest
     {
-        [TestMethod]
-        public void TestMethod1()
+        private readonly ICart _cart;
+
+        public CartTest()
         {
+            this._cart = new Cart();
+        }
+
+        [TestMethod]
+        public void GetOrderTotal_TotalWithoutPromotions_ReturnTotalPrice()
+        {
+            List<CartItem> cartItems = new List<CartItem>();
+            cartItems.Add(new CartItem() { SKU = "A", Quantity = 2 });
+            cartItems.Add(new CartItem() { SKU = "B", Quantity = 1 });
+            cartItems.Add(new CartItem() { SKU = "C", Quantity = 2 });
+            cartItems.Add(new CartItem() { SKU = "D", Quantity = 1 });
+
+            List<Item> allSKUs = this.GetAllSKUs();
+            int expected = (2 * 50) + (1 * 30) + (2 * 20) + (1 * 15);
+
+            double total = this._cart.GetOrderTotal(cartItems, allSKUs);
+
+            Assert.AreEqual(expected, total);
         }
 
         #region GetAllSKUs
