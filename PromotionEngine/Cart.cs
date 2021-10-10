@@ -16,9 +16,11 @@ namespace PromotionEngine
                               join cart in cartItems on item.SKU equals cart.SKU
                               select new { SKU = item.SKU, UnitPrice = item.UnitPrice, Quantity = cart.Quantity };
 
+            List<string> compareList = new List<string>();
             foreach (var crtItm in cartItemDet)
             {
                 double OfferPrice = 0;
+                compareList.Add(crtItm.SKU);
                 Promotion promObj = promotions != null ? promotions.Where(x => x.SKUs.Contains(crtItm.SKU)).FirstOrDefault() : null;
                 if (promObj != null)
                 {
@@ -26,6 +28,16 @@ namespace PromotionEngine
                     {
                         case PromotionType.NItemsPromo:
                             OfferPrice = CalculateNItemOfferPrice(crtItm.Quantity, crtItm.UnitPrice, promObj);
+                            break;
+                        case PromotionType.ComboPromo:
+                            if (!CheckCombinationExists(cartItems.Select(x => x.SKU).ToList(), promObj.SKUs))
+                            {
+                                OfferPrice = crtItm.Quantity * crtItm.UnitPrice;
+                            }
+                            else if (CheckCombinationExists(compareList, promObj.SKUs))
+                            {
+                                OfferPrice = promObj.OfferPrice;
+                            }
                             break;
                         default:
                             OfferPrice = crtItm.Quantity * crtItm.UnitPrice;

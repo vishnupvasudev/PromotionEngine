@@ -127,9 +127,26 @@ namespace PromotionEngine.UnitTest
         public List<Promotion> GetActivePromotions()
         {
             List<Promotion> promos = new List<Promotion>();
-            promos.Add(new Promotion() { Name = "3 of A's for 130", SKUs = new List<string> { "A" }, Quantity = 3, PromotionType = PromotionType.NItemsPromo, OfferPrice = 130 });
-            promos.Add(new Promotion() { Name = "2 of B's for 45", SKUs = new List<string> { "B" }, Quantity = 2, PromotionType = PromotionType.NItemsPromo, OfferPrice = 45 });
-            promos.Add(new Promotion() { Name = "C & D for 30", SKUs = new List<string> { "C", "D" }, PromotionType = PromotionType.ComboPromo, OfferPrice = 30 });
+            promos.Add(new Promotion() { 
+                Name = "3 of A's for 130", 
+                SKUs = new List<string> { "A" }, 
+                Quantity = 3, 
+                PromotionType = PromotionType.NItemsPromo, 
+                OfferPrice = 130 }
+            );
+            promos.Add(new Promotion() { 
+                Name = "2 of B's for 45", 
+                SKUs = new List<string> { "B" }, 
+                Quantity = 2, 
+                PromotionType = PromotionType.NItemsPromo, 
+                OfferPrice = 45 }
+            );
+            promos.Add(new Promotion() { 
+                Name = "C & D for 30", 
+                SKUs = new List<string> { "C", "D" }, 
+                PromotionType = PromotionType.ComboPromo, 
+                OfferPrice = 30 }
+            );
             return promos;
         }
         #endregion GetActivePromotions
