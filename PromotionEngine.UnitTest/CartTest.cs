@@ -1,20 +1,38 @@
+#region IncludedNamespaces
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PromotionEngine.Data;
 using System.Collections.Generic;
 using static PromotionEngine.Data.Enum;
+#endregion IncludedNamespaces
 
 namespace PromotionEngine.UnitTest
 {
     [TestClass]
     public class CartTest
     {
+        #region Private member
+
+        /// <summary>
+        /// _cart
+        /// </summary>
         private readonly ICart _cart;
 
+        #endregion Private member
+
+        #region CartTest
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public CartTest()
         {
             this._cart = new Cart();
         }
+        #endregion CartTest
 
+        #region GetOrderTotal_TotalWithoutPromotions_ReturnTotalPrice
+        /// <summary>
+        /// GetOrderTotal_TotalWithoutPromotions_ReturnTotalPrice
+        /// </summary>
         [TestMethod]
         public void GetOrderTotal_TotalWithoutPromotions_ReturnTotalPrice()
         {
@@ -31,7 +49,12 @@ namespace PromotionEngine.UnitTest
 
             Assert.AreEqual(expected, total);
         }
+        #endregion GetOrderTotal_TotalWithoutPromotions_ReturnTotalPrice
 
+        #region CalculateNItemOfferPrice_ApplyNItemPromotion_ReturnOfferPrice
+        /// <summary>
+        /// CalculateNItemOfferPrice_ApplyNItemPromotion_ReturnOfferPrice
+        /// </summary>
         [TestMethod]
         public void CalculateNItemOfferPrice_ApplyNItemPromotion_ReturnOfferPrice()
         {
@@ -44,7 +67,12 @@ namespace PromotionEngine.UnitTest
 
             Assert.AreEqual(expectedResult, offerPrice);
         }
+        #endregion CalculateNItemOfferPrice_ApplyNItemPromotion_ReturnOfferPrice
 
+        #region CheckCombinationExists_CombinationExist_ReturnTrue
+        /// <summary>
+        /// CheckCombinationExists_CombinationExist_ReturnTrue
+        /// </summary>
         [TestMethod]
         public void CheckCombinationExists_CombinationExist_ReturnTrue()
         {
@@ -55,7 +83,12 @@ namespace PromotionEngine.UnitTest
 
             Assert.IsTrue(isContains);
         }
+        #endregion CheckCombinationExists_CombinationExist_ReturnTrue
 
+        #region CheckCombinationExists_CombinationNotExist_ReturnFalse
+        /// <summary>
+        /// CheckCombinationExists_CombinationNotExist_ReturnFalse
+        /// </summary>
         [TestMethod]
         public void CheckCombinationExists_CombinationNotExist_ReturnFalse()
         {
@@ -66,7 +99,12 @@ namespace PromotionEngine.UnitTest
 
             Assert.IsFalse(isContains);
         }
+        #endregion CheckCombinationExists_CombinationNotExist_ReturnFalse
 
+        #region GetOrderTotal_TotalWithnItemPromotions_ReturnTotalPrice
+        /// <summary>
+        /// GetOrderTotal_TotalWithnItemPromotions_ReturnTotalPrice
+        /// </summary>
         [TestMethod]
         public void GetOrderTotal_TotalWithnItemPromotions_ReturnTotalPrice()
         {
@@ -83,7 +121,12 @@ namespace PromotionEngine.UnitTest
 
             Assert.AreEqual(expectedResult, total);
         }
+        #endregion GetOrderTotal_TotalWithnItemPromotions_ReturnTotalPrice
 
+        #region GetOrderTotal_TotalWithComboItemPromotions_ReturnTotalPrice
+        /// <summary>
+        /// GetOrderTotal_TotalWithComboItemPromotions_ReturnTotalPrice
+        /// </summary>
         [TestMethod]
         public void GetOrderTotal_TotalWithComboItemPromotions_ReturnTotalPrice()
         {
@@ -101,13 +144,14 @@ namespace PromotionEngine.UnitTest
 
             Assert.AreEqual(expectedResult, total);
         }
+        #endregion GetOrderTotal_TotalWithComboItemPromotions_ReturnTotalPrice
 
         #region GetAllSKUs
         /// <summary>
         /// GetAllSKUs
         /// </summary>
         /// <returns></returns>
-        public List<Item> GetAllSKUs()
+        private List<Item> GetAllSKUs()
         {
             List<Item> items = new List<Item>();
             items.Add(new Item() { SKU = "A", UnitPrice = 50 });
@@ -124,7 +168,7 @@ namespace PromotionEngine.UnitTest
         /// GetActivePromotions
         /// </summary>
         /// <returns></returns>
-        public List<Promotion> GetActivePromotions()
+        private List<Promotion> GetActivePromotions()
         {
             List<Promotion> promos = new List<Promotion>();
             promos.Add(new Promotion() { 

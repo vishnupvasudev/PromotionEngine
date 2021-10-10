@@ -1,13 +1,27 @@
-﻿using PromotionEngine.Data;
+﻿#region IncludedNamespaces
+using PromotionEngine.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using static PromotionEngine.Data.Enum;
+#endregion IncludedNamespaces
 
 namespace PromotionEngine
 {
+    #region Cart
+    /// <summary>
+    /// Cart
+    /// </summary>
     public class Cart : ICart
     {
+        #region GetOrderTotal
+        /// <summary>
+        /// GetOrderTotal
+        /// </summary>
+        /// <param name="cartItems"></param>
+        /// <param name="items"></param>
+        /// <param name="promotions"></param>
+        /// <returns></returns>
         public double GetOrderTotal(List<CartItem> cartItems, List<Item> items, List<Promotion> promotions = null)
         {
             double subTotal = 0;
@@ -20,6 +34,7 @@ namespace PromotionEngine
             foreach (var crtItm in cartItemDet)
             {
                 double OfferPrice = 0;
+                double actualPrice = crtItm.Quantity * crtItm.UnitPrice;
                 compareList.Add(crtItm.SKU);
                 Promotion promObj = promotions != null ? promotions.Where(x => x.SKUs.Contains(crtItm.SKU)).FirstOrDefault() : null;
                 if (promObj != null)
@@ -30,9 +45,10 @@ namespace PromotionEngine
                             OfferPrice = CalculateNItemOfferPrice(crtItm.Quantity, crtItm.UnitPrice, promObj);
                             break;
                         case PromotionType.ComboPromo:
-                            if (!CheckCombinationExists(cartItems.Select(x => x.SKU).ToList(), promObj.SKUs))
+                            List<string> cartSKUs = cartItems.Select(x => x.SKU).ToList();
+                            if (!CheckCombinationExists(cartSKUs, promObj.SKUs))
                             {
-                                OfferPrice = crtItm.Quantity * crtItm.UnitPrice;
+                                OfferPrice = actualPrice;
                             }
                             else if (CheckCombinationExists(compareList, promObj.SKUs))
                             {
@@ -43,12 +59,13 @@ namespace PromotionEngine
                             ////New methods for calculating the offer price by percentage promotion type goes here.
                             break;
                         default:
-                            OfferPrice = crtItm.Quantity * crtItm.UnitPrice;
+                            OfferPrice = actualPrice;
                             break;
                     }
-                }else
+                }
+                else
                 {
-                    OfferPrice = crtItm.Quantity * crtItm.UnitPrice;
+                    OfferPrice = actualPrice;
                 }
 
                 subTotal = subTotal + OfferPrice;
@@ -56,14 +73,31 @@ namespace PromotionEngine
 
             return subTotal;
         }
+        #endregion GetOrderTotal
 
+        #region CalculateNItemOfferPrice
+        /// <summary>
+        /// CalculateNItemOfferPrice
+        /// </summary>
+        /// <param name="itemQuantity"></param>
+        /// <param name="UnitPrice"></param>
+        /// <param name="promObj"></param>
+        /// <returns></returns>
         public double CalculateNItemOfferPrice(int itemQuantity, double UnitPrice, Promotion promObj)
         {
             double xOff = itemQuantity / promObj.Quantity;
             int remaining = itemQuantity % promObj.Quantity;
             return (Math.Floor(xOff) * promObj.OfferPrice) + (remaining * UnitPrice);
         }
+        #endregion CalculateNItemOfferPrice
 
+        #region CheckCombinationExists
+        /// <summary>
+        /// CheckCombinationExists
+        /// </summary>
+        /// <param name="compareList"></param>
+        /// <param name="PromotionSKUs"></param>
+        /// <returns></returns>
         public bool CheckCombinationExists(List<string> compareList, List<string> PromotionSKUs)
         {
             if (compareList != null && PromotionSKUs != null)
@@ -72,5 +106,7 @@ namespace PromotionEngine
             }
             return false;
         }
+        #endregion CheckCombinationExists
     }
+    #endregion Cart
 }
