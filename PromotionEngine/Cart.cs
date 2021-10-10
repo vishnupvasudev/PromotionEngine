@@ -39,6 +39,9 @@ namespace PromotionEngine
                                 OfferPrice = promObj.OfferPrice;
                             }
                             break;
+                        case PromotionType.PercentagePromo:
+                            ////New methods for calculating the offer price by percentage promotion type goes here.
+                            break;
                         default:
                             OfferPrice = crtItm.Quantity * crtItm.UnitPrice;
                             break;
