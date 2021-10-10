@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using static PromotionEngine.Data.Enum;
 
 namespace PromotionEngine
 {
@@ -17,7 +18,25 @@ namespace PromotionEngine
 
             foreach (var crtItm in cartItemDet)
             {
-                subTotal = subTotal + (crtItm.Quantity * crtItm.UnitPrice);
+                double OfferPrice = 0;
+                Promotion promObj = promotions != null ? promotions.Where(x => x.SKUs.Contains(crtItm.SKU)).FirstOrDefault() : null;
+                if (promObj != null)
+                {
+                    switch (promObj.PromotionType)
+                    {
+                        case PromotionType.NItemsPromo:
+                            OfferPrice = CalculateNItemOfferPrice(crtItm.Quantity, crtItm.UnitPrice, promObj);
+                            break;
+                        default:
+                            OfferPrice = crtItm.Quantity * crtItm.UnitPrice;
+                            break;
+                    }
+                }else
+                {
+                    OfferPrice = crtItm.Quantity * crtItm.UnitPrice;
+                }
+
+                subTotal = subTotal + OfferPrice;
             }
 
             return subTotal;
