@@ -32,6 +32,19 @@ namespace PromotionEngine.UnitTest
             Assert.AreEqual(expected, total);
         }
 
+        [TestMethod]
+        public void CalculateNItemOfferPrice_ApplyNItemPromotion_ReturnOfferPrice()
+        {
+            int itemQuantity = 5;
+            double unitPrice = 50;
+            Promotion prom = new Promotion() { Quantity = 3, PromotionType = PromotionType.NItemsPromo, OfferPrice = 130 };
+            int expectedResult = 130 + (2 * 50);
+
+            double offerPrice = this._cart.CalculateNItemOfferPrice(itemQuantity, unitPrice, prom);
+
+            Assert.AreEqual(expectedResult, offerPrice);
+        }
+
         #region GetAllSKUs
         /// <summary>
         /// GetAllSKUs

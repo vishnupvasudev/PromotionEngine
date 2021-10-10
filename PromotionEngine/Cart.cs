@@ -22,5 +22,11 @@ namespace PromotionEngine
 
             return subTotal;
         }
+
+        public double CalculateNItemOfferPrice(int itemQuantity, double UnitPrice, Promotion promObj)
+        {
+            double xOff = 0;
+            return xOff;
+        }
     }
 }

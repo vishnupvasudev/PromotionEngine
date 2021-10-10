@@ -10,5 +10,6 @@ namespace PromotionEngine
     public interface ICart
     {
         double GetOrderTotal(List<CartItem> cartItems, List<Item> items);
+        double CalculateNItemOfferPrice(int itemQuantity, double UnitPrice, Promotion promObj);
     }
 }
