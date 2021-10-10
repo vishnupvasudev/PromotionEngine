@@ -84,6 +84,24 @@ namespace PromotionEngine.UnitTest
             Assert.AreEqual(expectedResult, total);
         }
 
+        [TestMethod]
+        public void GetOrderTotal_TotalWithComboItemPromotions_ReturnTotalPrice()
+        {
+            List<CartItem> cartItems = new List<CartItem>();
+            cartItems.Add(new CartItem() { SKU = "A", Quantity = 3 });
+            cartItems.Add(new CartItem() { SKU = "B", Quantity = 5 });
+            cartItems.Add(new CartItem() { SKU = "C", Quantity = 1 });
+            cartItems.Add(new CartItem() { SKU = "D", Quantity = 1 });
+
+            List<Promotion> promos = this.GetActivePromotions();
+            List<Item> allSKUs = this.GetAllSKUs();
+            int expectedResult = (130) + (2 * 45 + 30) + 30;
+
+            double total = this._cart.GetOrderTotal(cartItems, allSKUs, promos);
+
+            Assert.AreEqual(expectedResult, total);
+        }
+
         #region GetAllSKUs
         /// <summary>
         /// GetAllSKUs
