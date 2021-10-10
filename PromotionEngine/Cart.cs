@@ -32,6 +32,10 @@ namespace PromotionEngine
 
         public bool CheckCombinationExists(List<string> compareList, List<string> PromotionSKUs)
         {
+            if (compareList != null && PromotionSKUs != null)
+            {
+                return PromotionSKUs.Except(compareList).Count() == 0;
+            }
             return false;
         }
     }
