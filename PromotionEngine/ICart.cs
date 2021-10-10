@@ -9,7 +9,7 @@ namespace PromotionEngine
 {
     public interface ICart
     {
-        double GetOrderTotal(List<CartItem> cartItems, List<Item> items);
+        double GetOrderTotal(List<CartItem> cartItems, List<Item> items, List<Promotion> promotions = null);
         double CalculateNItemOfferPrice(int itemQuantity, double UnitPrice, Promotion promObj);
 
         bool CheckCombinationExists(List<string> compareList, List<string> PromotionSKUs);

@@ -7,7 +7,7 @@ namespace PromotionEngine
 {
     public class Cart : ICart
     {
-        public double GetOrderTotal(List<CartItem> cartItems, List<Item> items)
+        public double GetOrderTotal(List<CartItem> cartItems, List<Item> items, List<Promotion> promotions = null)
         {
             double subTotal = 0;
 
