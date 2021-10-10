@@ -25,8 +25,9 @@ namespace PromotionEngine
 
         public double CalculateNItemOfferPrice(int itemQuantity, double UnitPrice, Promotion promObj)
         {
-            double xOff = 0;
-            return xOff;
+            double xOff = itemQuantity / promObj.Quantity;
+            int remaining = itemQuantity % promObj.Quantity;
+            return (Math.Floor(xOff) * promObj.OfferPrice) + (remaining * UnitPrice);
         }
     }
 }
