@@ -45,6 +45,17 @@ namespace PromotionEngine.UnitTest
             Assert.AreEqual(expectedResult, offerPrice);
         }
 
+        [TestMethod]
+        public void CheckCombinationExists_CombinationExist_ReturnTrue()
+        {
+            List<string> compareList = new List<string> { "A", "B", "C" };
+            List<string> PromotionSKUs = new List<string> { "A", "B" };
+
+            bool isContains = this._cart.CheckCombinationExists(compareList, PromotionSKUs);
+
+            Assert.IsTrue(isContains);
+        }
+
         #region GetAllSKUs
         /// <summary>
         /// GetAllSKUs

@@ -29,5 +29,10 @@ namespace PromotionEngine
             int remaining = itemQuantity % promObj.Quantity;
             return (Math.Floor(xOff) * promObj.OfferPrice) + (remaining * UnitPrice);
         }
+
+        public bool CheckCombinationExists(List<string> compareList, List<string> PromotionSKUs)
+        {
+            return false;
+        }
     }
 }
